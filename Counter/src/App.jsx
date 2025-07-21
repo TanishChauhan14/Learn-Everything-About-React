@@ -23,7 +23,7 @@ const dec = () => {
     <div>
     <h1>Count Value : {count}</h1>
     <button onClick={add}>Increase the Value ++</button>
-    <br /> <br />
+    <br /> <br /><br />
     <button onClick={dec}>Decrease the Value --</button>
    </div>
     </>
