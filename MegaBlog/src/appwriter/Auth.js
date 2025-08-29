@@ -1,14 +1,14 @@
 import { Client , ID ,Account} from "appwrite"
-import { conf } from "../config/Config"
+import config from "../config/Config"
 import { redirect } from "react-router-dom";
 
-export class AuthService{
+     class AuthService{
      Client = new Client();
      account;
      constructor(){
         this.Client
-        .setEndpoint(conf.aapwrite)
-        .setProject(conf.aapwriteProjectID);
+        .setEndpoint(config.aapwrite)
+        .setProject(config.aapwriteProjectID);
         this.account = new Account(this.Client);
      }
      async createaccount({email,password,name}){
@@ -43,7 +43,7 @@ export class AuthService{
 
      async getcurrentuser(){
         try {
-            const user = this.account.get();
+            const user = await this.account.get();
             
         } catch (error) {
             throw redirect ('/login')
