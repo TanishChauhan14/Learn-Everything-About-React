@@ -2,8 +2,9 @@ import { useState , useEffect } from 'react'
 import './App.css'
 import { useDispatch } from "react-redux"
 import authServices from './appwriter/Auth';
-import { Login,Logout } from "./features/authSlice";
-import { Footer, Header } from './components';
+import { login,logout } from "./features/authSlice";
+import { Header , Footer } from './components';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   // console.log(import.meta.env.VITE_APPWRITE_URL);
@@ -14,10 +15,10 @@ function App() {
     authServices.getcurrentuser()
     .then(userData => {
       if(userData){
-        dispatch(Login(userData))
+        dispatch(login(userData))
         console.log(userData);
       }else{
-        dispatch(Logout())
+        dispatch(logout())
       }
     })
     .catch(err  => console.log(err))
@@ -30,11 +31,11 @@ function App() {
   return !loading ? (
     <>
     <Header />
-     <h1 className=' underline text-amber-700'>Hello World!</h1>
+     <Outlet />
     <Footer />
 
     </>
   ): null
 }
  
-export default App
+export default App;

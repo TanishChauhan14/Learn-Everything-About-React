@@ -9,15 +9,17 @@ export const RTE = ({ name, label, control, defaultValue = "" }) => {
       <Controller
         name={name || "content"}
         control={control}
-        render={({ fields: { onchange } }) => {
+        defaultValue={defaultValue}
+        render={({ field }) => (
           <Editor
-            initialValue={defaultValue}
+            apiKey="039vb59g7qh5h1s0ktal4ou1ps1qtwsfzxc74r91lu7pprs0" // self-hosted, no cloud API key needed
+            value={field.value ?? ""} // never undefined
+            onEditorChange={field.onChange}
+            onBlur={field.onBlur}
             init={{
-              initialValue: defaultValue,
               height: 500,
               menubar: true,
               plugins: [
-                "image",
                 "advlist",
                 "autolink",
                 "lists",
@@ -33,19 +35,18 @@ export const RTE = ({ name, label, control, defaultValue = "" }) => {
                 "insertdatetime",
                 "media",
                 "table",
-                "code",
                 "help",
                 "wordcount",
-                "anchor",
               ],
               toolbar:
-                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+                "undo redo | blocks | image | bold italic forecolor | " +
+                "alignleft aligncenter alignright alignjustify | " +
+                "bullist numlist outdent indent | removeformat | help",
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
-            onEditorChange={onchange}
-          />;
-        }}
+          />
+        )}
       />
     </div>
   );

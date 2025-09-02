@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import authservice from "../appwriter/Auth";
-import { Login as authlogin } from "../features/authSlice";
+import { login as authlogin } from "../features/authSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logo, Input, Button } from "./index";
 import { useForm } from "react-hook-form";
 
@@ -10,7 +10,7 @@ const Login = () => {
   const usedispatch = useDispatch();
   const navigate = useNavigate();
   const [error, seterror] = useState("");
-  const [register, handleSubmit] = useForm();
+  const { register, handleSubmit } = useForm();
 
   const login = async (data) => {
     seterror("");

@@ -3,35 +3,40 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import authservice from "../appwriter/Auth";
-import { Login as authlogin } from "../features/authSlice";
+import { login as authlogin } from "../features/authSlice";
+import { Link } from "react-router-dom";
+import { Button, Input, Logo } from "./index"
 
 const Signup = () => {
-  const usedispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [register, handleSubmit] = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [error, seterror] = useState("");
 
   const signup = async (data) => {
     seterror("");
+    console.log("Hellloo");
+    
     try {
       const userdata = await authservice.createaccount(data);
+      console.log("userdata " +userdata)
       if (userdata) {
         const user = await authservice.getcurrentuser();
+        console.log("user "+user)
+
         if (user) {
-          useDispatch(authlogin(user));
-          navigate("/");
+          dispatch(authlogin(user)); 
+          navigate("/login");
         }
       }
     } catch (error) {
-      seterror(error);
+      seterror(error.message || error);
     }
   };
 
   return (
     <div className="flex items-center justify-center">
-      <div
-        className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
-      >
+      <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100px]">
             <Logo width="100%" />
@@ -56,9 +61,7 @@ const Signup = () => {
             <Input
               label="Full Name: "
               placeholder="Enter your full name"
-              {...register("name", {
-                required: true,
-              })}
+              {...register("name", { required: true })}
             />
             <Input
               label="Email: "
@@ -77,9 +80,7 @@ const Signup = () => {
               label="Password: "
               type="password"
               placeholder="Enter your password"
-              {...register("password", {
-                required: true,
-              })}
+              {...register("password", { required: true })}
             />
             <Button type="submit" className="w-full">
               Create Account
@@ -91,4 +92,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signup
